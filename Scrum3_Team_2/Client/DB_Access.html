@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <meta charset="utf-8">
+    <title>Scrum 3</title>
+  </head>
+  <body>
+    <form id="target" action="" method="post">
+      <!-- Use drop down or grid, not textbox -->
+      <select id="ddl1" name="ddl1">
+        <option value="1">customers</option>
+        <option value="2">orders</option>
+        <option value="3">products</option>
+      </select>
+      <!-- Scrum3 Name: <input type="text" id="sName" name ="sName">&nbsp; -->
+      <input type="submit" value="Submit">
+    </form>
+    <br /><br />
+    <table>
+      <tr id="row"> <!-- Needs to be in a while loop below, to display each record -->
+        <th class="col-sm-3" id="headerCol1"></th>
+        <td id="col1" class="col-sm-3"></td>
+        <th class="col-sm-5" id="headerCol2"></th>
+        <td id="col2" class="col-sm-5"></td>
+        <th class="col-sm-7" id="headerCol3"></th>
+        <td id="col3" class="col-sm-7"></td>
+        <th class="col-sm-9" id="headerCol4"></th>
+        <td id="col4" class="col-sm-9"></td>
+        <th class="col-sm-11" id="headerCol5"></th>
+        <td id="col5" class="col-sm-11"></td>
+      </tr>
+    </table>
+
+    <span id="start"></span>
+    <p style="color: blue">
+      <span id="aId"></span>
+      <br />
+      <span id="aName"></span>
+      <span id="result"></span>
+    </p>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+
+      $('#target').submit(function(event) {
+
+        //alert("inside JS function");
+
+        event.preventDefault();
+
+        //var aId = $('#ddl1').val() + " " + $('#ddl2').val();
+        var aId = $('#ddl1').val() + ' 1'; // Test variable
+        //var aId = $('#ddl1').val() + ' '; // Test variable
+
+        $.ajax({
+          type: 'POST',
+          url: '../ServiceProvider/API_2.php',
+          data: 'bId=' + aId,
+          dataType: 'json',
+          encode: true
+        })
+        .done(function(data) {
+          // Display these results on html
+          document.getElementById("aId").innerHTML = "test: " + data.rc1;// + data.rc2 + data.rc3 + data.rc4 + data.rc5;
+
+          /*
+          // Display these results on html
+          var rc1;
+          var rc2;
+          var rc3;
+          var rc4;
+          var rc5;
+
+          if (document.getElementById("ddl").innerHTML == "1") { // Can probably do this in a shorter way. / Change only the end text.
+            var headCol1 = "ID";
+            var headCol2 = "First Name";
+            var headCol3 = "Last Name";
+            var headCol4 = "Email";
+            var headCol5 = "Phone";
+            rc1 = data.id;
+            rc2 = data.firstName;
+            rc3 = data.lastName;
+            rc4 = data.email;
+            rc5 = data.phone;
+          } else if (document.getElementById("ddl").innerHTML == "2") {
+            var headCol1 = "ID";
+            var headCol2 = "Shipping Address";
+            var headCol3 = "Order Date";
+            var headCol4 = "Expected Arrival Date";
+            var headCol5 = "Price";
+            rc1 = data.id;
+            rc2 = data.ShippingAddress;
+            rc3 = data.orderDate;
+            rc4 = data.ExpectedArrivalDate;
+            rc5 = data.Price;
+          } else if (document.getElementById("ddl").innerHTML == "3") {
+            var headCol1 = "ID";
+            var headCol2 = "Name";
+            var headCol3 = "Color";
+            var headCol4 = "Description";
+            var headCol5 = "Price";
+            rc1 = data.id;
+            rc2 = data.name;
+            rc3 = data.color;
+            rc4 = data.description;
+            rc5 = data.price;
+          }
+            document.getElementById("headerCol1").innerHTML = headCol1;
+            document.getElementById("headerCol2").innerHTML = headCol2;
+            document.getElementById("headerCol3").innerHTML = headCol3;
+            document.getElementById("headerCol4").innerHTML = headCol4;
+            document.getElementById("headerCol5").innerHTML = headCol5;
+
+            document.getElementById("col1").innerHTML = rc1;
+            document.getElementById("col2").innerHTML = rc2;
+            document.getElementById("col3").innerHTML = rc3;
+            document.getElementById("col4").innerHTML = rc4;
+            document.getElementById("col5").innerHTML = rc5;
+            */
+          //}
+
+          //document.getElementById("aId").innerHTML = ; // Probably remove this
+          /*
+          document.getElementById("start").innerHTML = "Sailboat information returned from Database Emulator web service:";
+          document.getElementById("aSailboat").innerHTML = "Sailboat Information: " + data.boatString;
+          document.getElementById("aBoatName").innerHTML = "Sailboat Name: " + data.boatName;
+          document.getElementById("aOwnerName").innerHTML = "Sailboat Owner Name: " + data.boatOwnerName;
+          document.getElementById("aPrice").innerHTML = "Sailboat Price: " + data.boatPrice;
+          document.getElementById("aNumberOfSails").innerHTML = "Sailboat Number of Sails: " + data.boatNumberOfSails;
+          */
+        })
+        .fail(function() {
+          $('#result').text('An error occurred. Please contact your Web Service Administrator.');
+        });
+
+      });
+
+    </script>
+  </body>
+</html>
