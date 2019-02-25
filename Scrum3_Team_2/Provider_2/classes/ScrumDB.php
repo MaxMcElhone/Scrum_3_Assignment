@@ -36,7 +36,7 @@ class ScrumDB
 		self::$conn->close();
 		return $result;
 	}
-  
+
 	public function getRecords($tableName)
 	{
     self::connectTo();	//make this a standalone function that uses default values assigned above
@@ -71,7 +71,7 @@ class ScrumDB
 
   public function deleteRecord($tableName, $ID){
     self::connectTo();
-    $query = "DELETE FROM " . $tableName . " WHERE ID = " $ID;
+    $query = "DELETE FROM " . $tableName . " WHERE ID = " . $ID;
     $result = mysqli_query(self::$conn, $query);
     self::$con->close();
     return $result;
