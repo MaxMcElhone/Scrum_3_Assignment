@@ -75,7 +75,7 @@
                     if (tableName == 'customers') {
 
                         output += "<tr><th>ID</th><th>First Name</th><th>Last Name</th>" +
-                            "<th>Email</th><th>Phone</th><th>&nbsp;</th></tr></thead><tbody>";
+                            "<th>Email</th><th>Phone</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -92,7 +92,7 @@
                     }
                     else if (tableName == 'products') {
                         output += "<tr><th>ID</th><th>Name</th><th>Color</th>" +
-                            "<th>Description</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody>";
+                            "<th>Description</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -108,7 +108,7 @@
                     }
                     else if (tableName == 'orders') {
                         output += "<tr><th>ID</th><th>Shipping Address</th><th>Order Date</th>" +
-                            "<th>Expected Arrival Date</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody>";
+                            "<th>Expected Arrival Date</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -145,7 +145,15 @@
           query_api(tableName, 'delete', id);
         }
         // Insert a record
-        function insert_form(tableName, id) {
+        function insert_form(tableName) {
+          // xmlhttpI = new XMLHttpRequest();
+          // xmlhttpI.onreadystatechange = function() {
+          //   if (this.readyState == 4 && this.status == 200) {
+          //     xmlhttpI.open("GET", "insert.html?"+tableName, false);
+          //     xmlhttpI.send();
+          //   }
+          // };
+          window.location.href = "insert.html?q=" + tableName;
           // var result = insertRecord(tableName, data)
         }
         </script>

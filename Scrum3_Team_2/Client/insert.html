@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     </head>
-    <body>
+    <body onload="load()">
       <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="../index.html">Scrum 3</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,17 @@
           </form>
       </div>
       <script type="text/javascript">
+        // Pre-selects table for insert page base upon table open on select page,
+            // If user used insert button on table on select page
+        function load() {
+          var url_string = window.location.href;
+          var url = new URL(url_string);
+          var q = url.searchParams.get("q");
+          if (q != null) {
+            document.getElementById("tableName").value = q;
+            build_form(q);
+          }
+        }
         function input_fields(name,id) {
           var output = '<div class="input-group mb-3">';
           output += '<div class="input-group-prepend">';
