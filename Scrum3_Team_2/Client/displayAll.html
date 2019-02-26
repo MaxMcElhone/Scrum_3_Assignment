@@ -17,7 +17,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" for="user">Select a table</span>
                     </div>
-                    <select id="tableName" name="tableName" class="form-control" onchange="query_api(this.value, 'getAll')">
+                    <select id="tableName" name="tableName" class="form-control" onchange="query_api(this.value, 'getAll', -1)">
                         <option style="display:none;" selected>Choose a table</option>
                         <option value="customers">customers</option>
                         <option value="orders">orders</option>
@@ -30,10 +30,11 @@
             </form>
         </div>
         <script type="text/javascript">
-        function query_api(tableName, method) {
+        function query_api(tableName, method, id2) {
             var tableName, params, xmlhttp, data, x, output = "";
             params = "method=" + method;
             params += "&tableName=" + tableName;
+            params += "&id2=" + id2;
 
             // alert(params); // for debuging
 
@@ -64,8 +65,9 @@
                             output += "<td>" + data[x].email + "</td>";
                             output += "<td>" + data[x].phone + "</td>";
                             output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form('
-                                        + data[x].ID + ')" class="btn btn-primary">' + "</td>";
-                            output += "</tr>";
+                                        + data[x].ID + ')" class="btn btn-primary">' +
+                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
+                            output += "</tr>"; // Need tableName and ID passed for delete
                         }
                     }
                     else if (tableName == 'products') {
@@ -116,6 +118,14 @@
         function submit_form(id) {
             document.getElementById("ID").value = id;
             document.getElementById('target').submit();
+        }
+        function delete_form(tableName, id) {
+          // Pass tableName and id to ScrumDB deleteRecord
+          query_api(tableName, 'delete', id);
+        }
+        // Insert a record
+        function insert_form(tableName, id) {
+          var result = insertRecord(tableName, data)
         }
         </script>
     </body>
