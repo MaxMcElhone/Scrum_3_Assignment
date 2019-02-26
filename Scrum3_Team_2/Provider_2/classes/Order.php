@@ -126,11 +126,17 @@ class Order
         return $this->price;
     }
 
+    public function getFormattedPrice()
+  	{
+  		$formattedPrice = "$" . number_format($this->price, 2);
+  		return $formattedPrice;
+  	}
+
     public function toString()
     {
-      return "ID: " . getID() . " Address: " . getShippingAddress() .
-          " Ordered: " . getOrderDate() . " Expected Arrival: " .
-          getExpectedArivalDate() . " Price: " . getPrice(); 
+      return "ID: " . $this->getID() . " Address: " . $this->getShippingAddress() .
+          " Ordered: " . $this->getOrderDate() . " Expected Arrival: " .
+          $this->getExpectedArivalDate() . " Price: " . $this->getFormattedPrice();
     }
 }
 
