@@ -17,15 +17,132 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" for="user">tableName</span>
                     </div>
-                    <input type="text" name="tableName" value="<?= $_REQUEST['tableName'] ?>" class="form-control" readonly>
+                    <input type="text" id="tableName" name="tableName" value="<?= $_REQUEST['tableName'] ?>" class="form-control" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" for="user">ID</span>
                     </div>
-                    <input type="text" name="ID" value="<?= $_REQUEST['ID'] ?>" class="form-control" readonly>
+                    <input type="text" id="ID" name="ID" value="<?= $_REQUEST['ID'] ?>" class="form-control" readonly>
+                </div>
+                <div id="form_end">
+
+                </div>
+                <div class="">
+                  <input type="button" name="" value="Update" class="btn btn-primary" onclick="updateRecord()">
                 </div>
             </form>
         </div>
+        <script type="text/javascript">
+          function input_fields(name,id , value) {
+            var output = '<div class="input-group mb-3">';
+            output += '<div class="input-group-prepend">';
+            output += '<span class="input-group-text" for="user">' + name + '</span>';
+            output += '</div>';
+            output += '<input type="text" id="' + id + '" name="' + id + '" value="' + value + '" class="form-control">';
+            output += '</div>';
+            return output;
+          }
+
+          function build_form() {
+            var tableName = '<?= $_REQUEST['tableName'] ?>';
+            var id = <?= $_REQUEST['ID'] ?>;
+            var output, result, xmlhttp, params, data, x = '';
+            params = "method=getOne";
+            params += "&tableName=" + tableName;
+            params += "&ID=" + id;
+
+            xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                var response = this.responseText.replace(/\\u0000/g,"");
+
+                response = response.replace(/Customer|Order|Product/g, "");
+                // alert(response);
+                data = JSON.parse(response);
+
+                var form_end = document.getElementById("form_end");
+
+                for(x in data) {
+                  if (tableName == 'customers'){
+                    output = input_fields("First Name", "firstName", data[x].firstName);
+                    output += input_fields("Last Name", "lastName", data[x].lastName);
+                    output += input_fields("Email", "email", data[x].email);
+                    output += input_fields("Phone", "phone", data[x].phone);
+
+                  }
+                  else if (tableName == 'orders') {
+                    output = input_fields("Shipping Address", "shippingAddress", data[x].shippingAddress);
+                    output += input_fields("Order Date", "orderDate", data[x].orderDate);
+                    output += input_fields("Expected Arrival Date", "expectedArrivalDate", data[x].expectedArrivalDate);
+                    output += input_fields("Price", "price", data[x].price);
+                  }
+                  else if (tableName == 'products') {
+                    output = input_fields("Name", "name", data[x].name);
+                    output += input_fields("Color", "color", data[x].color);
+                    output += input_fields("Description", "description", data[x].description);
+                    output += input_fields("Price", "price", data[x].price);
+                  }
+                  // alert(output);
+                  form_end.innerHTML = output;
+                }
+              }
+            };
+
+
+            xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, false);
+            xmlhttp.send();
+          }
+
+          function updateRecord(){
+            var tableName = '<?= $_REQUEST['tableName'] ?>';
+            var id = <?= $_REQUEST['ID'] ?>;
+            var output, result, xmlhttp, params, data, x = '';
+            params = "method=update";
+            params += "&tableName=" + tableName;
+            params += "&ID=" + id;
+
+            xmlhttp = new XMLHttpRequest();
+
+            if (tableName == 'customers'){
+              params += "&firstName=" + document.getElementById("firstName").value;
+              params += "&lastName=" + document.getElementById("lastName").value;
+              params += "&email=" + document.getElementById("email").value;
+              params += "&phone=" + document.getElementById("phone").value;
+
+            }
+            else if (tableName == 'orders') {
+              params += "&shippingAddress=" + document.getElementById("shippingAddress").value;
+              params += "&orderDate=" + document.getElementById("orderDate").value;
+              params += "&expectedArrivalDate=" + document.getElementById("expectedArrivalDate").value;
+              params += "&price=" + document.getElementById("price").value;
+            }
+            else if (tableName == 'products') {
+              params += "&name=" + document.getElementById("name").value;
+              params += "&color=" + document.getElementById("color").value;
+              params += "&description=" + document.getElementById("description").value;
+              params += "&price=" + document.getElementById("price").value;
+            }
+            xmlhttp.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                var response = this.responseText.replace(/\\u0000/g,"");
+
+                response = response.replace(/Customer|Order|Product/g, "");
+                //alert(response);
+                data = JSON.parse(response);
+                alert(data.message);
+              }
+            };
+            xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, false);
+            xmlhttp.send();
+
+
+            build_form();
+          }
+
+
+          build_form();
+        </script>
     </body>
 </html>

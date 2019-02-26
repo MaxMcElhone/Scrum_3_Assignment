@@ -8,7 +8,7 @@ class Order
   private $ID = 0;
   private $shippingAddress = "Default street";
   private $orderDate = "Default Date";
-  private $expectedArivalDate = "Default Date";
+  private $expectedArrivalDate = "Default Date";
   private $price = 0;
 
     /**
@@ -81,26 +81,26 @@ class Order
     }
 
     /**
-     * Get the value of Expected Arival Date
+     * Get the value of Expected Arrival Date
      *
      * @return mixed
      */
-    public function getExpectedArivalDate()
+    public function getExpectedArrivalDate()
     {
-        return $this->expectedArivalDate;
+        return $this->expectedArrivalDate;
     }
 
     /**
-     * Set the value of Expected Arival Date
+     * Set the value of Expected Arrival Date
      *
-     * @param mixed expectedArivalDate
+     * @param mixed expectedArrivalDate
      *
      */
-    public function setExpectedArivalDate($expectedArivalDate)
+    public function setExpectedArrivalDate($expectedArrivalDate)
     {
-        $this->expectedArivalDate = $expectedArivalDate;
+        $this->expectedArrivalDate = $expectedArrivalDate;
 
-        return $this->expectedArivalDate;
+        return $this->expectedArrivalDate;
     }
 
     /**
@@ -136,7 +136,7 @@ class Order
     {
       return "ID: " . $this->getID() . " Address: " . $this->getShippingAddress() .
           " Ordered: " . $this->getOrderDate() . " Expected Arrival: " .
-          $this->getExpectedArivalDate() . " Price: " . $this->getFormattedPrice();
+          $this->getExpectedArrivalDate() . " Price: " . $this->getFormattedPrice();
     }
 }
 

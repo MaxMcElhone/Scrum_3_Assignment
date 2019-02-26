@@ -51,7 +51,7 @@ class ScrumDB
     self::connectTo();	//make this a standalone function that uses default values assigned above
     $query = "SELECT * FROM " . $tableName . " WHERE ID = " . $ID;
     $result = mysqli_query(self::$conn, $query);
-    self::$con->close();
+    self::$conn->close();
     return $result;
   }
 
@@ -59,14 +59,19 @@ class ScrumDB
     self::connectTo();
     $query = "UPDATE " . $tableName . " SET ";
     foreach ($data as $key => $value) {
-      $query .= $key . " = " . $value . ", ";
+      if ( $key == "Price" || $key == "price"){
+        $query .= $key . " = " . $value . ", ";
+      }
+      else {
+        $query .= $key . " = '" . $value . "', ";
+      }
     }
 
     $query = substr($query, 0, -2);
-    $query .= "WHERE ID = " . $ID;
+    $query .= " WHERE ID = " . $ID;
     $result = mysqli_query(self::$conn, $query);
-    self::$con->close();
-    return $result;
+    self::$conn->close();
+    return $query;
   }
 
   public function deleteRecord($tableName, $ID){
@@ -79,18 +84,25 @@ class ScrumDB
 
   public function insertRecord($tableName, $data){
     self::connectTo();
-    $columns = "(";
-    $values = "(";
+    $columns = "( ";
+    $values = "( ";
     foreach ($data as $column => $value) {
-      $columns .= $column . ", ";
-      $values .= $value . ", ";
+      if ( $key == "Price" || $key == "price"){
+        $columns .= $column . ", ";
+        $values .= $value . ", ";
+      }
+      else {
+        $columns .= $column . ", ";
+        $values .= "'" . $value . "', ";
+      }
+
     }
     $columns = substr($columns, 0, -2);
     $values = substr($values, 0, -2);
-    $query = "INSERT INTO " . $tableName . " " . $columns . ") VALUES " . $values . ")";
+    $query = "INSERT INTO " . $tableName . " " . $columns . " ) VALUES " . $values . " )";
     $result = mysqli_query(self::$conn, $query);
-    self::$con->close();
-    return $result;
+    self::$conn->close();
+    return $query;
   }
 }
 

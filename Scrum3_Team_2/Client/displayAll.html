@@ -42,11 +42,12 @@
 
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+
                     var response = this.responseText.replace(/\\u0000/g, "");
                     // alert(response); // for debuging
 
                     response = response.replace(/Customer|Order|Product/g, "");
-                    // alert(response);// for debuging
+                    alert(response);// for debuging
                     data = JSON.parse(response);
 
                     var display_selected = document.getElementById("display_all");
@@ -94,7 +95,7 @@
                             output += "<td>" + data[x].ID + "</td>";
                             output += "<td>" + data[x].shippingAddress + "</td>";
                             output += "<td>" + data[x].orderDate + "</td>";
-                            output += "<td>" + data[x].expectedArivalDate + "</td>";
+                            output += "<td>" + data[x].expectedArrivalDate + "</td>";
                             output += "<td>" + data[x].price + "</td>";
                             output += "<td>" + "<input type=\"button\" name=\"id\" value=\"Select\" onclick=\"submit_form("
                                         + data[x].ID + ")\" class=\"btn btn-primary\">" + "</td>";

@@ -15,7 +15,7 @@ $db = new ScrumDB();
 $result;
 
 if($method == 'getOne'){
-  $ID = $_REQUEST('ID');
+  $ID = $_REQUEST['ID'];
   $result = $db->getOneRecord($tableName, $ID);
 
 }
@@ -23,7 +23,7 @@ elseif ($method == 'getAll') {
   $result = $db->getRecords($tableName);
 }
 elseif ($method == 'update') {
-    $ID = $_REQUEST('ID');
+    $ID = $_REQUEST['ID'];
 
      $params = array();
      if ($tableName == "customers") {
@@ -35,7 +35,7 @@ elseif ($method == 'update') {
      else if ($tableName == "orders") {
          $params['ShippingAddress'] = $_REQUEST["shippingAddress"];
          $params['orderDate'] = $_REQUEST["orderDate"];
-         $params['ExpectedArivalDate'] = $_REQUEST['expectedArivalDate'];
+         $params['ExpectedArrivalDate'] = $_REQUEST['expectedArrivalDate'];
          $params['Price'] = $_REQUEST['price'];
      }
      else if ($tableName == "products") {
@@ -46,7 +46,10 @@ elseif ($method == 'update') {
      }
 
      $db->updateRecord($tableName, $ID, $params);
-     $result->getOneRecord($tableName, $ID);
+     //$result = $db->getOneRecord($tableName, $ID);
+     $data["message"] = "Update successful";
+     print(json_encode($data));
+     die();
 }
 elseif ($method == 'insert') {
     $params = array();
@@ -59,7 +62,7 @@ elseif ($method == 'insert') {
     else if ($tableName == "orders") {
         $params['ShippingAddress'] = $_REQUEST["shippingAddress"];
         $params['orderDate'] = $_REQUEST["orderDate"];
-        $params['ExpectedArivalDate'] = $_REQUEST['expectedArivalDate'];
+        $params['expectedArrivalDate'] = $_REQUEST['expectedArrivalDate'];
         $params['Price'] = $_REQUEST['price'];
     }
     else if ($tableName == "products") {
@@ -70,6 +73,9 @@ elseif ($method == 'insert') {
     }
 
     $result = $db->insertRecord($tableName, $params);
+    $data["message"] = $result;
+    print(json_encode($data));
+    die();
 }
 elseif ($method == 'delete') {
     //$ID = $_REQUEST('ID');
@@ -119,7 +125,7 @@ else if ( $tableName == "orders"){
     $o->setID($row['ID']);
     $o->setShippingAddress($row['ShippingAddress']);
     $o->setOrderDate($row['orderDate']);
-    $o->setExpectedArivalDate($row['ExpectedArivalDate']);
+    $o->setExpectedArrivalDate($row['ExpectedArrivalDate']);
     $o->setPrice($row['Price']);
 
     $data[] = (array) $o;
