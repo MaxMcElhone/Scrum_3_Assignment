@@ -80,7 +80,6 @@ elseif ($method == 'insert') {
 elseif ($method == 'delete') {
     //$ID = $_REQUEST('ID');
     //$db->deleteRecord($tableName, $id2);
-    //$ID = $_REQUEST('ID');
     if ($id2 != -1) {
       $result = $db->deleteRecord($tableName, $id2);
       $result = $db->getRecords($tableName);

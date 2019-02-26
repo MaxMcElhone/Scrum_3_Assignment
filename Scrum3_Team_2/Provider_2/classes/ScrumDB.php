@@ -71,14 +71,14 @@ class ScrumDB
     $query .= " WHERE ID = " . $ID;
     $result = mysqli_query(self::$conn, $query);
     self::$conn->close();
-    return $query;
+    return $result;
   }
 
   public function deleteRecord($tableName, $ID){
     self::connectTo();
     $query = "DELETE FROM " . $tableName . " WHERE ID = " . $ID;
-    $result = mysqli_query(self::$conn, $query);
-    self::$con->close();
+    $result = mysqli_query (self::$conn, $query);
+    self::$conn->close();
     return $result;
   }
 
@@ -102,7 +102,7 @@ class ScrumDB
     $query = "INSERT INTO " . $tableName . " " . $columns . " ) VALUES " . $values . " )";
     $result = mysqli_query(self::$conn, $query);
     self::$conn->close();
-    return $query;
+    return $result;
   }
 }
 
