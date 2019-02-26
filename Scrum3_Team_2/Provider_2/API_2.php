@@ -70,7 +70,7 @@ elseif ($method == 'insert') {
 }
 elseif ($method == 'delete') {
     $ID = $_REQUEST('ID');
-    $db->insertRecord($tableName, $ID);
+    $db->deleteRecord($tableName, $ID);
 }
 
 $data = array();
@@ -92,7 +92,7 @@ if ( $tableName == "customers"){
 else if ( $tableName == "products"){
   while ($row = $result->fetch_assoc()){
     $p = new Product();
-    $p->setID($row['ID']);
+    $p->setID($row['id']);
     $p->setName($row['name']);
     $p->setColor($row['color']);
     $p->setDescription($row['description']);
