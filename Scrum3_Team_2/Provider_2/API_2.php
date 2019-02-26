@@ -5,78 +5,77 @@ include("classes/Customer.php");
 include("classes/Order.php");
 include("classes/Product.php");
 
-$tableName = $_POST['tableName'];
-$method = $_POST['method'];
+$tableName = $_REQUEST['tableName'];
+$method = $_REQUEST['method'];
 
 $db = new ScrumDB();
 $result;
 
-if(strcmp($method, 'getOne') == 0){
-  $ID = $_POST('ID');
+if($method == 'getOne'){
+  $ID = $_REQUEST('ID');
   $result = $db->getOneRecord($tableName, $ID);
 
 }
-elseif (strcmp($method, 'getAll') == 0) {
+elseif ($method == 'getAll') {
   $result = $db->getRecords($tableName);
-
 }
-elseif (strcmp($method, 'update') == 0) {
-    $ID = $_POST('ID');
+elseif ($method == 'update') {
+    $ID = $_REQUEST('ID');
 
      $params = array();
-     if (strcmp($tableName, "customers") == 0) {
-         $params['firstName'] = $_POST["firstName"];
-         $params['lastName'] = $_POST["lastName"];
-         $params['email'] = $_POST['email'];
-         $params['phone'] = $_POST['phone'];
+     if ($tableName == "customers") {
+         $params['firstName'] = $_REQUEST["firstName"];
+         $params['lastName'] = $_REQUEST["lastName"];
+         $params['email'] = $_REQUEST['email'];
+         $params['phone'] = $_REQUEST['phone'];
      }
-     else if (strcmp($tableName, "orders") == 0) {
-         $params['ShippingAddress'] = $_POST["shippingAddress"];
-         $params['orderDate'] = $_POST["orderDate"];
-         $params['ExpectedArivalDate'] = $_POST['expectedArivalDate'];
-         $params['Price'] = $_POST['price'];
+     else if ($tableName == "orders") {
+         $params['ShippingAddress'] = $_REQUEST["shippingAddress"];
+         $params['orderDate'] = $_REQUEST["orderDate"];
+         $params['ExpectedArivalDate'] = $_REQUEST['expectedArivalDate'];
+         $params['Price'] = $_REQUEST['price'];
      }
-     else if (strcmp($tableName, "products") == 0) {
-         $params['name'] = $_POST["name"];
-         $params['color'] = $_POST["color"];
-         $params['description'] = $_POST['description'];
-         $params['price'] = $_POST['price'];
+     else if ($tableName == "products") {
+         $params['name'] = $_REQUEST["name"];
+         $params['color'] = $_REQUEST["color"];
+         $params['description'] = $_REQUEST['description'];
+         $params['price'] = $_REQUEST['price'];
      }
 
      $db->updateRecord($tableName, $ID, $params);
      $result->getOneRecord($tableName, $ID);
 }
-elseif (strcmp($method, 'insert') == 0) {
+elseif ($method == 'insert') {
     $params = array();
-    if (strcmp($tableName, "customers") == 0) {
-        $params['firstName'] = $_POST["firstName"];
-        $params['lastName'] = $_POST["lastName"];
-        $params['email'] = $_POST['email'];
-        $params['phone'] = $_POST['phone'];
+    if ($tableName == "customers") {
+        $params['firstName'] = $_REQUEST["firstName"];
+        $params['lastName'] = $_REQUEST["lastName"];
+        $params['email'] = $_REQUEST['email'];
+        $params['phone'] = $_REQUEST['phone'];
     }
-    else if (strcmp($tableName, "orders") == 0) {
-        $params['ShippingAddress'] = $_POST["shippingAddress"];
-        $params['orderDate'] = $_POST["orderDate"];
-        $params['ExpectedArivalDate'] = $_POST['expectedArivalDate'];
-        $params['Price'] = $_POST['price'];
+    else if ($tableName == "orders") {
+        $params['ShippingAddress'] = $_REQUEST["shippingAddress"];
+        $params['orderDate'] = $_REQUEST["orderDate"];
+        $params['ExpectedArivalDate'] = $_REQUEST['expectedArivalDate'];
+        $params['Price'] = $_REQUEST['price'];
     }
-    else if (strcmp($tableName, "products") == 0) {
-        $params['name'] = $_POST["name"];
-        $params['color'] = $_POST["color"];
-        $params['description'] = $_POST['description'];
-        $params['price'] = $_POST['price'];
+    else if ($tableName == "products") {
+        $params['name'] = $_REQUEST["name"];
+        $params['color'] = $_REQUEST["color"];
+        $params['description'] = $_REQUEST['description'];
+        $params['price'] = $_REQUEST['price'];
     }
 
     $result = $db->insertRecord($tableName, $params);
 }
-elseif (strcmp($method, 'delete') == 0) {
-    $ID = $_POST('ID');
+elseif ($method == 'delete') {
+    $ID = $_REQUEST('ID');
     $db->insertRecord($tableName, $ID);
 }
 
 $data = array();
 // customers
-if ( strcmp($tableName, "customers") == 0){
+if ( $tableName == "customers"){
   while ($row = $result->fetch_assoc()){
     $c = new Customer();
     $c->setID($row['ID']);
@@ -90,7 +89,7 @@ if ( strcmp($tableName, "customers") == 0){
 }
 
 // products
-else if ( strcmp($tableName, "products") == 0){
+else if ( $tableName == "products"){
   while ($row = $result->fetch_assoc()){
     $p = new Product();
     $p->setID($row['ID']);
@@ -104,7 +103,7 @@ else if ( strcmp($tableName, "products") == 0){
 }
 
 // orders
-else if ( strcmp($tableName, "orders") == 0){
+else if ( $tableName == "orders"){
   while ($row = $result->fetch_assoc()){
     $o = new Order();
     $o->setID($row['ID']);

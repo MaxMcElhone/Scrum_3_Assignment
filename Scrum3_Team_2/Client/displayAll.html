@@ -12,20 +12,22 @@
     </head>
     <body>
         <div class="container text-center">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" for="user">Select a table</span>
+            <form id="target" action="selectOne.php" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" for="user">Select a table</span>
+                    </div>
+                    <select id="tableName" name="tableName" class="form-control" onchange="query_api(this.value, 'getAll')">
+                        <option style="display:none;" selected>Choose a table</option>
+                        <option value="customers">customers</option>
+                        <option value="orders">orders</option>
+                        <option value="products">products</option>
+                    </select>
                 </div>
-                <select id="tablesList" name="tablesList" class="form-control" onchange="query_api(this.value, 'getAll')">
-                    <option style="display:none;" selected>Choose a table</option>
-                    <option value="customers">customers</option>
-                    <option value="orders">orders</option>
-                    <option value="products">products</option>
-                </select>
-            </div>
-            <div id="display_all">
-
-            </div>
+                <div id="display_all">
+                </div>
+                <input type="text" id="ID" name="ID" value="" hidden>
+            </form>
         </div>
         <script type="text/javascript">
         function query_api(tableName, method) {
@@ -52,7 +54,7 @@
                     if (tableName == 'customers') {
 
                         output += "<tr><th>ID</th><th>First Name</th><th>Last Name</th>" +
-                            "<th>Email</th><th>Phone</th></tr></thead><tbody>";
+                            "<th>Email</th><th>Phone</th><th>&nbsp;</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -61,12 +63,14 @@
                             output += "<td>" + data[x].lastName + "</td>";
                             output += "<td>" + data[x].email + "</td>";
                             output += "<td>" + data[x].phone + "</td>";
+                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form('
+                                        + data[x].ID + ')" class="btn btn-primary">' + "</td>";
                             output += "</tr>";
                         }
                     }
                     else if (tableName == 'products') {
                         output += "<tr><th>ID</th><th>Name</th><th>Color</th>" +
-                            "<th>Description</th><th>Price</th></tr></thead><tbody>";
+                            "<th>Description</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -75,12 +79,13 @@
                             output += "<td>" + data[x].color + "</td>";
                             output += "<td>" + data[x].description + "</td>";
                             output += "<td>" + data[x].price + "</td>";
+                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary">' + "</td>";
                             output += "</tr>";
                         }
                     }
                     else if (tableName == 'orders') {
                         output += "<tr><th>ID</th><th>Shipping Address</th><th>Order Date</th>" +
-                            "<th>Expected Arrival Date</th><th>Price</th></tr></thead><tbody>";
+                            "<th>Expected Arrival Date</th><th>Price</th><th>&nbsp;</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -89,6 +94,9 @@
                             output += "<td>" + data[x].orderDate + "</td>";
                             output += "<td>" + data[x].expectedArivalDate + "</td>";
                             output += "<td>" + data[x].price + "</td>";
+                            output += "<td>" + "<input type=\"button\" name=\"id\" value=\"Select\" onclick=\"submit_form("
+                                        + data[x].ID + ")\" class=\"btn btn-primary\">" + "</td>";
+
                             output += "</tr>";
                         }
                     }
@@ -101,8 +109,13 @@
                 }
             };
 
-            xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, true);
+            xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, false);
             xmlhttp.send();
+        }
+
+        function submit_form(id) {
+            document.getElementById("ID").value = id;
+            document.getElementById('target').submit();
         }
         </script>
     </body>
