@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Display All</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container text-center">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" for="user">Select a table</span>
+                </div>
+                <select id="tablesList" name="tablesList" class="form-control" onchange="query_api(this.value, 'getAll')">
+                    <option style="display:none;" selected>Choose a table</option>
+                    <option value="customers">customers</option>
+                    <option value="orders">orders</option>
+                    <option value="products">products</option>
+                </select>
+            </div>
+            <div id="display_all">
+
+            </div>
+        </div>
+        <script type="text/javascript">
+        function query_api(tableName, method) {
+            var tableName, params, xmlhttp, data, x, output = "";
+            params = "method=" + method;
+            params += "&tableName=" + tableName;
+
+            // alert(params); // for debuging
+
+            xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = this.responseText.replace(/\\u0000/g, "");
+                    // alert(response); // for debuging
+
+                    response = response.replace(/Customer|Order|Product/g, "");
+                    // alert(response);// for debuging
+                    data = JSON.parse(response);
+
+                    var display_selected = document.getElementById("display_all");
+
+                    output = "<table class='table table-bordered'><thead class='thead-dark'>";
+                    if (tableName == 'customers') {
+
+                        output += "<tr><th>ID</th><th>First Name</th><th>Last Name</th>" +
+                            "<th>Email</th><th>Phone</th></tr></thead><tbody>";
+
+                        for (x in data){
+                            output += "<tr>";
+                            output += "<td>" + data[x].ID + "</td>";
+                            output += "<td>" + data[x].firstName + "</td>";
+                            output += "<td>" + data[x].lastName + "</td>";
+                            output += "<td>" + data[x].email + "</td>";
+                            output += "<td>" + data[x].phone + "</td>";
+                            output += "</tr>";
+                        }
+                    }
+                    else if (tableName == 'products') {
+                        output += "<tr><th>ID</th><th>Name</th><th>Color</th>" +
+                            "<th>Description</th><th>Price</th></tr></thead><tbody>";
+
+                        for (x in data){
+                            output += "<tr>";
+                            output += "<td>" + data[x].ID + "</td>";
+                            output += "<td>" + data[x].name + "</td>";
+                            output += "<td>" + data[x].color + "</td>";
+                            output += "<td>" + data[x].description + "</td>";
+                            output += "<td>" + data[x].price + "</td>";
+                            output += "</tr>";
+                        }
+                    }
+                    else if (tableName == 'orders') {
+                        output += "<tr><th>ID</th><th>Shipping Address</th><th>Order Date</th>" +
+                            "<th>Expected Arrival Date</th><th>Price</th></tr></thead><tbody>";
+
+                        for (x in data){
+                            output += "<tr>";
+                            output += "<td>" + data[x].ID + "</td>";
+                            output += "<td>" + data[x].shippingAddress + "</td>";
+                            output += "<td>" + data[x].orderDate + "</td>";
+                            output += "<td>" + data[x].expectedArivalDate + "</td>";
+                            output += "<td>" + data[x].price + "</td>";
+                            output += "</tr>";
+                        }
+                    }
+
+
+                    output += "</tbody></table>";
+
+                    display_selected.innerHTML = output;
+
+                }
+            };
+
+            xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, true);
+            xmlhttp.send();
+        }
+        </script>
+    </body>
+</html>
