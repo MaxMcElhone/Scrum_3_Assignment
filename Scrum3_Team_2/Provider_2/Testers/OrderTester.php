@@ -11,7 +11,7 @@ print("<br /><br />"); //return HTML new lines
 $order->setID(1);
 $order->setShippingAddress("Ship Address");
 $order->setOrderDate("Order Date");
-$order->setExpectedArivalDate("Arrival Date");
+$order->setExpectedArrivalDate("Arrival Date");
 $order->setPrice(99);
 
 $rCode = $order->toString(); //call the toString( ) method in the $order object & overwrite string in $rCode variable
