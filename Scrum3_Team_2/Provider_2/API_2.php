@@ -7,6 +7,9 @@ include("classes/Product.php");
 
 $tableName = $_REQUEST['tableName'];
 $method = $_REQUEST['method'];
+if (isset($_REQUEST['id2'])) {
+  $id2 = $_REQUEST['id2'];
+}
 
 $db = new ScrumDB();
 $result;
@@ -69,8 +72,15 @@ elseif ($method == 'insert') {
     $result = $db->insertRecord($tableName, $params);
 }
 elseif ($method == 'delete') {
-    $ID = $_REQUEST('ID');
-    $db->deleteRecord($tableName, $ID);
+    //$ID = $_REQUEST('ID');
+    //$db->deleteRecord($tableName, $id2);
+    //$ID = $_REQUEST('ID');
+    if ($id2 != -1) {
+      $result = $db->deleteRecord($tableName, $id2);
+      $result = $db->getRecords($tableName);
+    } else {
+      $result = $db->getRecords($tableName);
+    }
 }
 
 $data = array();
