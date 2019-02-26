@@ -67,7 +67,7 @@
                             output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form('
                                         + data[x].ID + ')" class="btn btn-primary">' +
                                         '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
-                            output += "</tr>"; // Need tableName and ID passed for delete
+                            output += "</tr>";
                         }
                     }
                     else if (tableName == 'products') {
@@ -81,8 +81,9 @@
                             output += "<td>" + data[x].color + "</td>";
                             output += "<td>" + data[x].description + "</td>";
                             output += "<td>" + data[x].price + "</td>";
-                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary">' + "</td>";
-                            output += "</tr>";
+                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary">' +
+                            '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
+                output += "</tr>";
                         }
                     }
                     else if (tableName == 'orders') {
@@ -97,8 +98,8 @@
                             output += "<td>" + data[x].expectedArivalDate + "</td>";
                             output += "<td>" + data[x].price + "</td>";
                             output += "<td>" + "<input type=\"button\" name=\"id\" value=\"Select\" onclick=\"submit_form("
-                                        + data[x].ID + ")\" class=\"btn btn-primary\">" + "</td>";
-
+                                        + data[x].ID + ")\" class=\"btn btn-primary\">" +
+                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
                             output += "</tr>";
                         }
                     }
@@ -125,7 +126,7 @@
         }
         // Insert a record
         function insert_form(tableName, id) {
-          var result = insertRecord(tableName, data)
+          // var result = insertRecord(tableName, data)
         }
         </script>
     </body>
