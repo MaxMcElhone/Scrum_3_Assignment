@@ -90,6 +90,7 @@ elseif ($method == 'delete') {
       $result = $db->deleteRecord($tableName, $id2);
       $result = $db->getRecords($tableName);
     } else {
+      alert("Error when deleting record.");
       $result = $db->getRecords($tableName);
     }
 }
