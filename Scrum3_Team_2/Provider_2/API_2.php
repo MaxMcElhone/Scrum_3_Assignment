@@ -62,7 +62,7 @@ elseif ($method == 'insert') {
     else if ($tableName == "orders") {
         $params['ShippingAddress'] = $_REQUEST["shippingAddress"];
         $params['orderDate'] = $_REQUEST["orderDate"];
-        $params['expectedArrivalDate'] = $_REQUEST['expectedArrivalDate'];
+        $params['ExpectedArrivalDate'] = $_REQUEST['expectedArrivalDate'];
         $params['Price'] = $_REQUEST['price'];
     }
     else if ($tableName == "products") {
@@ -73,8 +73,14 @@ elseif ($method == 'insert') {
     }
 
     $result = $db->insertRecord($tableName, $params);
-    $data["message"] = $result;
-    print(json_encode($data));
+    if ($result){
+      $data["message"] = "Insert was successful";
+      print(json_encode($data));
+    }
+    else {
+      $data["message"] = "Insert was Failed";
+      print(json_encode($data));
+    }
     die();
 }
 elseif ($method == 'delete') {

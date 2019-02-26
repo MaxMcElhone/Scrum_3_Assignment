@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Select One</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <body>
+      <div class="container text-center">
+          <form class="" action="" method="post">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text" for="user">tableName</span>
+                  </div>
+                  <select id="tableName" name="tableName" class="form-control" onchange="build_form(this.value)">
+                      <option style="display:none;" selected>Choose a table</option>
+                      <option value="customers">customers</option>
+                      <option value="orders">orders</option>
+                      <option value="products">products</option>
+                  </select>
+              </div>
+              <div id="form_end">
+
+              </div>
+          </form>
+      </div>
+      <script type="text/javascript">
+        function input_fields(name,id) {
+          var output = '<div class="input-group mb-3">';
+          output += '<div class="input-group-prepend">';
+          output += '<span class="input-group-text" for="user">' + name + '</span>';
+          output += '</div>';
+          output += '<input type="text" id="' + id + '" name="' + id + '" value="" class="form-control" required>';
+          output += '</div>';
+          return output;
+        }
+        function build_form(tableName) {
+          var form_end = document.getElementById("form_end");
+
+          if (tableName == 'customers'){
+            output = input_fields("First Name", "firstName");
+            output += input_fields("Last Name", "lastName");
+            output += input_fields("Email", "email");
+            output += input_fields("Phone", "phone");
+
+          }
+          else if (tableName == 'orders') {
+            output = input_fields("Shipping Address", "shippingAddress");
+            output += input_fields("Order Date", "orderDate");
+            output += input_fields("Expected Arrival Date", "expectedArrivalDate");
+            output += input_fields("Price", "price");
+          }
+          else if (tableName == 'products') {
+            output = input_fields("Name", "name");
+            output += input_fields("Color", "color");
+            output += input_fields("Description", "description");
+            output += input_fields("Price", "price");
+          }
+
+          output += '<div class="">';
+          output += '<input type="button" name="" value="Insert" class="btn btn-primary" onclick="insertRecord()">';
+          output += '</div>';
+          form_end.innerHTML = output;
+        }
+
+
+        function insertRecord() {
+          var tableName = document.getElementById("tableName").value;
+          var output, result, xmlhttp, params, data, x = '';
+          params = "method=insert";
+          params += "&tableName=" + tableName;
+
+          xmlhttp = new XMLHttpRequest();
+
+          if (tableName == 'customers'){
+            params += "&firstName=" + document.getElementById("firstName").value;
+            params += "&lastName=" + document.getElementById("lastName").value;
+            params += "&email=" + document.getElementById("email").value;
+            params += "&phone=" + document.getElementById("phone").value;
+
+          }
+          else if (tableName == 'orders') {
+            params += "&shippingAddress=" + document.getElementById("shippingAddress").value;
+            params += "&orderDate=" + document.getElementById("orderDate").value;
+            params += "&expectedArrivalDate=" + document.getElementById("expectedArrivalDate").value;
+            params += "&price=" + document.getElementById("price").value;
+          }
+          else if (tableName == 'products') {
+            params += "&name=" + document.getElementById("name").value;
+            params += "&color=" + document.getElementById("color").value;
+            params += "&description=" + document.getElementById("description").value;
+            params += "&price=" + document.getElementById("price").value;
+          }
+          xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+              var response = this.responseText.replace(/\\u0000/g,"");
+
+              response = response.replace(/Customer|Order|Product/g, "");
+              //alert(response);
+              data = JSON.parse(response);
+              alert(data.message);
+            }
+          };
+
+          xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, false);
+          xmlhttp.send();
+        }
+
+      </script>
+    </body>
+  </html>

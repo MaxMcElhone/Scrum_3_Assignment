@@ -87,7 +87,7 @@ class ScrumDB
     $columns = "( ";
     $values = "( ";
     foreach ($data as $column => $value) {
-      if ( $key == "Price" || $key == "price"){
+      if ( $column == "Price" || $column == "price"){
         $columns .= $column . ", ";
         $values .= $value . ", ";
       }
