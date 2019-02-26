@@ -11,6 +11,25 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     </head>
     <body>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="../index.html">Scrum 3</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="displayAll.html">Display All</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="insert.html">Insert Record</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
         <div class="container text-center">
             <form id="target" action="selectOne.php" method="post">
                 <div class="input-group mb-3">
@@ -47,7 +66,7 @@
                     // alert(response); // for debuging
 
                     response = response.replace(/Customer|Order|Product/g, "");
-                    alert(response);// for debuging
+                    //alert(response);// for debuging
                     data = JSON.parse(response);
 
                     var display_selected = document.getElementById("display_all");
@@ -66,8 +85,8 @@
                             output += "<td>" + data[x].email + "</td>";
                             output += "<td>" + data[x].phone + "</td>";
                             output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form('
-                                        + data[x].ID + ')" class="btn btn-primary">' +
-                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
+                                        + data[x].ID + ')" class="btn btn-primary mr-2">' +
+                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-danger"' + "</td>";
                             output += "</tr>";
                         }
                     }
@@ -82,8 +101,8 @@
                             output += "<td>" + data[x].color + "</td>";
                             output += "<td>" + data[x].description + "</td>";
                             output += "<td>" + data[x].price + "</td>";
-                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary">' +
-                            '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
+                            output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary mr-2">' +
+                            '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-danger"' + "</td>";
                 output += "</tr>";
                         }
                     }
@@ -99,8 +118,8 @@
                             output += "<td>" + data[x].expectedArrivalDate + "</td>";
                             output += "<td>" + data[x].price + "</td>";
                             output += "<td>" + "<input type=\"button\" name=\"id\" value=\"Select\" onclick=\"submit_form("
-                                        + data[x].ID + ")\" class=\"btn btn-primary\">" +
-                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-primary"' + "</td>";
+                                        + data[x].ID + ")\" class=\"btn btn-primary mr-2\">" +
+                                        '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-danger"' + "</td>";
                             output += "</tr>";
                         }
                     }

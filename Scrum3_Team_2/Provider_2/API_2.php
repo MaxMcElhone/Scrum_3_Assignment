@@ -45,10 +45,16 @@ elseif ($method == 'update') {
          $params['price'] = $_REQUEST['price'];
      }
 
-     $db->updateRecord($tableName, $ID, $params);
+     $result = $db->updateRecord($tableName, $ID, $params);
      //$result = $db->getOneRecord($tableName, $ID);
-     $data["message"] = "Update successful";
-     print(json_encode($data));
+     if ($result){
+       $data["message"] = "Update was successful";
+       print(json_encode($data));
+     }
+     else {
+       $data["message"] = "Update Failed";
+       print(json_encode($data));
+     }
      die();
 }
 elseif ($method == 'insert') {
@@ -78,7 +84,7 @@ elseif ($method == 'insert') {
       print(json_encode($data));
     }
     else {
-      $data["message"] = "Insert was Failed";
+      $data["message"] = "Insert Failed";
       print(json_encode($data));
     }
     die();
