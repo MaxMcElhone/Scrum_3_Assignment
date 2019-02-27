@@ -47,14 +47,16 @@ elseif ($method == 'update') {
 
      $result = $db->updateRecord($tableName, $ID, $params);
      //$result = $db->getOneRecord($tableName, $ID);
-     if ($result){
-       $data["message"] = "Update was successful";
-       print(json_encode($data));
-     }
-     else {
-       $data["message"] = "Update Failed";
-       print(json_encode($data));
-     }
+     // if ($result){
+     //   $data["message"] = "Update was successful";
+     //   print(json_encode($data));
+     // }
+     // else {
+     //   $data["message"] = "Update Failed";
+     //   print(json_encode($data));
+     // }
+     $data["message"] = $result;
+     print(json_encode($data));
      die();
 }
 elseif ($method == 'insert') {

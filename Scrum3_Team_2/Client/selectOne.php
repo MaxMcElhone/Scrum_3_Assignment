@@ -153,7 +153,12 @@
                 response = response.replace(/Customer|Order|Product/g, "");
                 //alert(response);
                 data = JSON.parse(response);
-                alert(data.message);
+                if (data.message){
+                  window.location.href = "displayAll.html?q=" + tableName;
+                }
+                else {
+                  alert("Insert failed");
+                }
               }
             };
             xmlhttp.open("POST", "../Provider_2/API_2.php?"+params, false);
