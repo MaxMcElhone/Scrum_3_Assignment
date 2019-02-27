@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `ShippingAddress` varchar(60) NOT NULL,
   `orderDate` date NOT NULL,
   `ExpectedArrivalDate` date NOT NULL,
-  `Price` decimal(30,0) NOT NULL,
+  `Price` decimal(30,2) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
