@@ -19,13 +19,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="../index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="displayAll.html">Display All</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="insert.html">Insert Record</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
             </li>
           </ul>
         </div>

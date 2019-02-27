@@ -19,13 +19,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="../index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="displayAll.html">Display All</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="insert.html">Insert Record</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
             </li>
           </ul>
         </div>
@@ -37,8 +40,8 @@
                         <span class="input-group-text" for="user">Select a table</span>
                     </div>
                     <select id="tableName" name="tableName" class="form-control" onchange="query_api(this.value, 'getAll', -1)">
-                        <option style="display:none;" selected>Choose a table</option>
-                        <option value="customers">customers</option>
+                        <!-- <option style="display:none;" selected>Choose a table</option> -->
+                        <option value="customers" selected>customers</option>
                         <option value="orders">orders</option>
                         <option value="products">products</option>
                     </select>
@@ -148,6 +151,7 @@
         function insert_form(tableName, id) {
           // var result = insertRecord(tableName, data)
         }
+        query_api('customers', 'getAll', -1);
         </script>
     </body>
 </html>

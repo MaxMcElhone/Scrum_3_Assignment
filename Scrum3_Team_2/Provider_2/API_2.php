@@ -79,14 +79,16 @@ elseif ($method == 'insert') {
     }
 
     $result = $db->insertRecord($tableName, $params);
-    if ($result){
-      $data["message"] = "Insert was successful";
-      print(json_encode($data));
-    }
-    else {
-      $data["message"] = "Insert Failed";
-      print(json_encode($data));
-    }
+    // if ($result){
+    //   $data["message"] = "Insert was successful";
+    //   print(json_encode($data));
+    // }
+    // else {
+    //   $data["message"] = "Insert Failed";
+    //   print(json_encode($data));
+    // }
+    $data["message"] = $result;
+    print(json_encode($data));
     die();
 }
 elseif ($method == 'delete') {
@@ -96,7 +98,6 @@ elseif ($method == 'delete') {
       $result = $db->deleteRecord($tableName, $id2);
       $result = $db->getRecords($tableName);
     } else {
-      alert("Error when deleting record.");
       $result = $db->getRecords($tableName);
     }
 }
