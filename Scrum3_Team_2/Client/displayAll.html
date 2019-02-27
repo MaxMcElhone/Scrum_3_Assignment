@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     </head>
-    <body>
+    <body onload="load()">
       <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="../index.html">Scrum 3</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
                     if (tableName == 'customers') {
 
                         output += "<tr><th>ID</th><th>First Name</th><th>Last Name</th>" +
-                            "<th>Email</th><th>Phone</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
+                            "<th>Email</th><th>Phone</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-success">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -95,7 +95,7 @@
                     }
                     else if (tableName == 'products') {
                         output += "<tr><th>ID</th><th>Name</th><th>Color</th>" +
-                            "<th>Description</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
+                            "<th>Description</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-success">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -103,7 +103,7 @@
                             output += "<td>" + data[x].name + "</td>";
                             output += "<td>" + data[x].color + "</td>";
                             output += "<td>" + data[x].description + "</td>";
-                            output += "<td>" + data[x].price + "</td>";
+                            output += "<td>$" + parseFloat(data[x].price).toFixed(2) + "</td>";
                             output += "<td>" + '<input type="button" name="id" value="Select" onclick="submit_form(' + data[x].ID + ')" class="btn btn-primary mr-2">' +
                             '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-danger"' + "</td>";
                 output += "</tr>";
@@ -111,7 +111,7 @@
                     }
                     else if (tableName == 'orders') {
                         output += "<tr><th>ID</th><th>Shipping Address</th><th>Order Date</th>" +
-                            "<th>Expected Arrival Date</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-primary">' + "</th></tr></thead><tbody>";
+                            "<th>Expected Arrival Date</th><th>Price</th><th>" + '<input type="button" name="insert" value="Insert" onclick="insert_form(\'' + tableName + '\')" class="btn btn-success">' + "</th></tr></thead><tbody>";
 
                         for (x in data){
                             output += "<tr>";
@@ -119,7 +119,7 @@
                             output += "<td>" + data[x].shippingAddress + "</td>";
                             output += "<td>" + data[x].orderDate + "</td>";
                             output += "<td>" + data[x].expectedArrivalDate + "</td>";
-                            output += "<td>" + data[x].price + "</td>";
+                            output += "<td>$" + parseFloat(data[x].price).toFixed(2) + "</td>";
                             output += "<td>" + "<input type=\"button\" name=\"id\" value=\"Select\" onclick=\"submit_form("
                                         + data[x].ID + ")\" class=\"btn btn-primary mr-2\">" +
                                         '<input type="button" name="delete" value="Delete" onclick="delete_form(\'' + tableName + '\', ' + data[x].ID + ')" class="btn btn-danger"' + "</td>";
@@ -158,6 +158,18 @@
           // };
           window.location.href = "insert.html?q=" + tableName;
           // var result = insertRecord(tableName, data)
+        }
+        function load() {
+          var url_string = window.location.href;
+          var url = new URL(url_string);
+          var q = url.searchParams.get("q");
+          if (q != null) {
+            document.getElementById("tableName").value = q;
+            query_api(q, 'getAll', -1);
+          }
+          else {
+            query_api('customers', 'getAll', -1);
+          }
         }
         query_api('customers', 'getAll', -1);
         </script>
