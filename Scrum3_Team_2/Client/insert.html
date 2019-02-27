@@ -40,8 +40,7 @@
                       <span class="input-group-text" for="user">tableName</span>
                   </div>
                   <select id="tableName" name="tableName" class="form-control" onchange="build_form(this.value)">
-                      <option style="display:none;" selected>Choose a table</option>
-                      <option value="customers">customers</option>
+                      <option value="customers" selected>customers</option>
                       <option value="orders">orders</option>
                       <option value="products">products</option>
                   </select>
@@ -150,6 +149,7 @@
           xmlhttp.send();
         }
 
+        build_form('customers');
       </script>
     </body>
   </html>
